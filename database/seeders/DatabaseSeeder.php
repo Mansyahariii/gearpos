@@ -15,7 +15,11 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        // Create default users for each role
+        /*
+        |--------------------------------------------------------------------------
+        | USERS (password DI-HASH, WAJIB)
+        |--------------------------------------------------------------------------
+        */
         $users = [
             [
                 'nama' => 'Pemilik Toko',
@@ -47,11 +51,21 @@ class DatabaseSeeder extends Seeder
             ],
         ];
 
-        foreach ($users as $userData) {
-            User::create($userData);
+        foreach ($users as $user) {
+            User::create([
+                'nama' => $user['nama'],
+                'username' => $user['username'],
+                'password' => Hash::make($user['password']),
+                'role' => $user['role'],
+                'status' => $user['status'],
+            ]);
         }
 
-        // Create default categories
+        /*
+        |--------------------------------------------------------------------------
+        | KATEGORI
+        |--------------------------------------------------------------------------
+        */
         $kategoris = [
             ['nama_kategori' => 'Oli & Pelumas'],
             ['nama_kategori' => 'Ban & Velg'],
@@ -67,7 +81,11 @@ class DatabaseSeeder extends Seeder
             Kategori::create($kategori);
         }
 
-        // Create sample products
+        /*
+        |--------------------------------------------------------------------------
+        | BARANG / PRODUK
+        |--------------------------------------------------------------------------
+        */
         $barangs = [
             [
                 'nama_barang' => 'Oli Mesin Yamalube 1L',
